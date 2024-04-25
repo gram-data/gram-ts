@@ -1,0 +1,26 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "baseUrl": ".",
+    "paths": {
+      "@gram-data/gram": ["packages/gram/src/index.ts"],
+      "@gram-data/gram-ast": ["packages/gram-ast/src/index.ts"],
+      "gramv1": ["packages/gramv1/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}
