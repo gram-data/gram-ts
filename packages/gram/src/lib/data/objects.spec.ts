@@ -1,4 +1,4 @@
-import {of, make, value} from ".";
+import {of, make, value} from "./data";
 
 describe("Patterns of objects", () => {
   it("should start with a single object", () => {

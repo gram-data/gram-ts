@@ -1,4 +1,4 @@
-import { make, of } from "."
+import { make, of } from "./data"
 
 describe("Patterns of strings", () => {
   it("should start with a single string", () => {
