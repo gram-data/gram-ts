@@ -1,5 +1,6 @@
 import Parser from 'tree-sitter';
 import GramLang from '@gram-data/tree-sitter-gram';
+import type { CstLabels, CstNode, CstRecord, CstProperty, CstRelationship, CstSyntax } from '../cst/cst-types';
 
 import { pipe, Option } from "effect"
 
@@ -16,17 +17,19 @@ export const reduce = <T>(cst:GramSyntaxNode, f:(cst:GramSyntaxNode, acc:T) => T
 
 export type SyntaxNodeFunction<T> = (cst:Parser.SyntaxNode) => T;
 
-
 export type GramCstRelationshipTypeTag = 
-  "undirected_single" |
-  "undirected_double_arrow" |
-  "undirected_squiggle" |
-  "single_arrow_right" |
-  "single_arrow_left" |
-  "double_arrow_right" |
-  "double_arrow_left" |
-  "squiggle_arrow_right" |
-  "squiggle_arrow_left";
+  "single_undirected" |
+  "single_bidirectional" |
+  "single_right" |
+  "single_left" |
+  "double_undirected" |
+  "double_bidirectional" |
+  "double_right" |
+  "double_left" |
+  "squiggle_undirected" |
+  "squiggle_bidirectional" |
+  "squiggle_right" |
+  "squiggle_left";
 
 
 export type GramSemanticElementTypeTag = "node" | GramCstRelationshipTypeTag;
@@ -38,34 +41,52 @@ export interface GramSyntaxNode extends Parser.SyntaxNode {
   children: GramSyntaxNode[];
 }
 
-
 export type GramSemanticStats = Record<GramSemanticElementTypeTag, number>;
 
 export const emptyStats:GramSemanticStats = {
   node: 0,
-  single_arrow_right: 0,
-  single_arrow_left: 0,
-  undirected_single: 0,
-  undirected_double_arrow: 0,
-  undirected_squiggle: 0,
-  double_arrow_right: 0,
-  double_arrow_left: 0,
-  squiggle_arrow_right: 0,
-  squiggle_arrow_left: 0
+  single_undirected: 0,
+  single_bidirectional: 0,
+  single_right: 0,
+  single_left: 0,
+  double_undirected: 0,
+  double_bidirectional: 0,
+  double_right: 0,
+  double_left: 0,
+  squiggle_undirected: 0,
+  squiggle_bidirectional: 0,
+  squiggle_right: 0,
+  squiggle_left: 0
 }
 
-export const isGramSemanticElement = (cst:Parser.SyntaxNode):cst is GramSyntaxNode => {
-  switch (cst.type) {
+export const isCstSyntax = (o:unknown):o is CstSyntax => (typeof o === "object") && (o !== null) && ("type" in o);
+
+export const isCstNode = (o:unknown):o is CstNode => isCstSyntax(o) && (o.type === "node");
+
+export const isCstRelationship = (o:unknown):o is CstRelationship => isCstSyntax(o) && (o.type === "relationship");
+
+export const isCstLabels = (o:unknown):o is CstLabels => isCstSyntax(o) && (o.type === "labels");
+
+export const isCstRecord = (o:unknown):o is CstRecord => isCstSyntax(o) && (o.type === "record");
+
+export const isGramSemanticElement = (o:unknown):o is GramSyntaxNode => {
+  if (typeof o !== "object" || o === null || !("type" in o)) {
+    return false;
+  }
+  switch (o.type) {
     case "node":
-    case "undirected_single":
-    case "undirected_double_arrow":
-    case "undirected_squiggle":
-    case "single_arrow_right":
-    case "single_arrow_left":
-    case "double_arrow_right":
-    case "double_arrow_left":
-    case "squiggle_arrow_right":
-    case "squiggle_arrow_left":
+    case "single_undirected":
+    case "single_bidirectional":
+    case "single_right":
+    case "single_left":
+    case "double_undirected":
+    case "double_bidirectional":
+    case "double_right":
+    case "double_left":
+    case "squiggle_undirected":
+    case "squiggle_bidirectional":
+    case "squiggle_right":
+    case "squiggle_left":
       return true;
     default:
       return false;
@@ -84,3 +105,24 @@ export const stats = (cst:GramSyntaxNode) => reduce(cst, (cst, acc) => {
   )
   }, 
   emptyStats);
+
+export const nodes = (cst:GramSyntaxNode):CstNode[] => reduce(cst, (cst, acc) => {
+  return isCstNode(cst) ? [...acc, cst] : acc;
+}, [] as CstNode[]);
+
+export const relationships = (cst:GramSyntaxNode):CstRelationship[] => reduce(cst, (cst, acc) => {
+  return isCstRelationship(cst) ? [...acc, cst] : acc;
+}, [] as CstRelationship[]);
+
+export const labels = (cst:GramSyntaxNode):Set<string> => reduce(cst, (cst, acc) => {
+  if (isCstLabels(cst)) cst.namedChildren.forEach(child => acc.add(child.text))
+  return acc;
+}, new Set<string>());
+
+export const properties = (cst:GramSyntaxNode):CstProperty[] => reduce(cst, (cst, acc) => {
+  // if (isCstRecord(cst)) { cst.namedChildren.forEach((property:CstProperty)=> console.log(`${property.keyNode.text}:${property.valueNode.text}`)) }
+  return isCstRecord(cst) ? [...acc, ...cst.namedChildren] : acc;
+}, [] as CstProperty[]);
+
+export const propertyKey = (cst:CstProperty):string => cst.keyNode.text;
+export const propertyValue = (cst:CstProperty):string => cst.valueNode.text;

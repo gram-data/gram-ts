@@ -21,7 +21,6 @@
         "main": "packages/gram/src/index.ts",
         "tsConfig": "packages/gram/tsconfig.lib.json",
         "assets": ["packages/gram/*.md"],
-        "generatePackageJson": true,
         "format": ["cjs"]
       }
     },

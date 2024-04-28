@@ -1,4 +1,4 @@
-import { GramSyntaxNode, parse, stats } from "./parser";
+import { GramSyntaxNode, parse, stats, GramSemanticStats } from "./parser";
 
 describe("gram parsed CST", () => {
   it("stats should count nodes", () => {
@@ -15,22 +15,27 @@ describe("gram parsed CST", () => {
   it("stats should count relationships", () => {
     const parseTree = parse("(hello)-->(world)");
     const gramStats = stats(parseTree.rootNode as GramSyntaxNode);
-    expect(gramStats["single_arrow_right"]).toBe(1);
+    expect(gramStats["single_right"]).toBe(1);
     expect(gramStats["node"]).toBe(2);
   });
 
   it("stats should count relationships", () => {
     const parseTree = parse("(a)--(b)==(c)~~(d)-->(e)<--(f)==>(g)<==(h)~~>(i)<~~(j)");
     const gramStats = stats(parseTree.rootNode as GramSyntaxNode);
-    expect(gramStats["undirected_single"]).toBe(1);
-    expect(gramStats["undirected_double_arrow"]).toBe(1);
-    expect(gramStats["undirected_squiggle"]).toBe(1);
-    expect(gramStats["single_arrow_right"]).toBe(1);
-    expect(gramStats["single_arrow_left"]).toBe(1);
-    expect(gramStats["double_arrow_right"]).toBe(1);
-    expect(gramStats["double_arrow_left"]).toBe(1);
-    expect(gramStats["squiggle_arrow_right"]).toBe(1);
-    expect(gramStats["squiggle_arrow_left"]).toBe(1);
-    expect(gramStats["node"]).toBe(10);
+    expect(gramStats).toEqual({
+      node: 10,
+      single_undirected: 1,
+      single_bidirectional: 0,
+      single_right: 1,
+      single_left: 1,
+      double_undirected: 1,
+      double_bidirectional: 0,
+      double_right: 1,
+      double_left: 1,
+      squiggle_undirected: 1,
+      squiggle_bidirectional: 0,
+      squiggle_right: 1,
+      squiggle_left: 1
+    } as GramSemanticStats);
   });
 })
