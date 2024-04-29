@@ -11,7 +11,6 @@ export interface CstSyntax {
   readonly grammarType: string
   readonly text: string
   readonly fields: ReadonlyArray<string>
-  readonly children: ReadonlyArray<CstSyntax>
 }
 
 export const CstSyntax = S.Struct({
@@ -21,7 +20,7 @@ export const CstSyntax = S.Struct({
   type: S.String,
   grammarType: S.String,
   text: S.String,
-  fields: S.Array(S.String),
+  fields: S.Array(S.String)
 })
 
 const CstIdentifier = S.Struct({
@@ -106,11 +105,17 @@ export const CstRelationshipValueUnion = S.Union(
 export const CstRelationshipValue = S.Struct({
   ...CstAttributes.fields,
 })
+export type CstRelationshipValue = S.Schema.Type<typeof CstRelationshipValue>
 
-export const CstRelationship = S.Struct({
+export interface CstRelationship extends CstSyntax {
+  readonly leftNode: CstNode
+  readonly rightNode: CstNode | CstRelationship
+  readonly valueNode: CstRelationshipValue
+}
+export const CstRelationship: S.Schema<CstRelationship> = S.Struct({
   ...CstSyntax.fields,
   leftNode: CstNode,
-  rightNode: S.Union(CstNode),
+  rightNode: S.suspend(() => S.Union(CstNode, CstRelationship)),
   valueNode: CstRelationshipValue
-})
-export type CstRelationship = S.Schema.Type<typeof CstRelationship>
+}).annotations({identifier: "CstRelationship"})
+

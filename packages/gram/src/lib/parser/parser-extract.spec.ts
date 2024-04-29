@@ -1,4 +1,4 @@
-import { GramSyntaxNode, parse, nodes, relationships, labels, properties, propertyKey, propertyValue } from "./parser";
+import { GramSyntaxNode, parse, nodes, relationships, labels, properties, propertyKey, propertyValue, rightNode, leftNode } from "./parser";
 
 describe("gram parsed CST", () => {
   it("should extract a node", () => {
@@ -21,8 +21,24 @@ describe("gram parsed CST", () => {
     expect(cstRelationships).toHaveLength(1);
     expect(cstRelationships[0].type).toBe("relationship");
     expect(cstRelationships[0].leftNode.identifierNode?.text).toBe("hello");
-    expect(cstRelationships[0].rightNode.identifierNode?.text).toBe("world");
+    expect(rightNode(cstRelationships[0]).identifierNode?.text).toBe("world");
     expect(cstRelationships[0].valueNode.identifierNode?.text).toBe("to");
+    expect(cstRelationships[0].valueNode.type).toBe("single_right");
+  })
+  it("should extract a --> relationship", () => {
+    const parseTree = parse("(hello)-[to]->(world)-[from]->(abk)");
+    const cstRelationships = relationships(parseTree.rootNode as GramSyntaxNode);
+    expect(cstRelationships).toHaveLength(2);
+    // cstRelationships.forEach((cstRelationship, index) => console.log(`${index}: ${cstRelationship.toString()}`));
+    expect(cstRelationships[0].type).toBe("relationship");
+    expect(cstRelationships[0].leftNode.identifierNode?.text).toBe("hello");
+    expect(cstRelationships[0].valueNode.identifierNode?.text).toBe("to");
+    expect(rightNode(cstRelationships[0]).identifierNode?.text).toBe("world");
+    expect(cstRelationships[0].valueNode.type).toBe("single_right");
+    expect(rightNode(cstRelationships[0]).id).toBe(leftNode(cstRelationships[1]).id);
+    expect(leftNode(cstRelationships[1]).identifierNode?.text).toBe("world");
+    expect(cstRelationships[1].valueNode.identifierNode?.text).toBe("from");
+    expect(rightNode(cstRelationships[1]).identifierNode?.text).toBe("abk");
   })
   it("should extract labels", () => {
     const parseTree = parse("(hello:Word:Greeting),(world:Word:Subject)");

@@ -110,8 +110,12 @@ export const nodes = (cst:GramSyntaxNode):CstNode[] => reduce(cst, (cst, acc) =>
   return isCstNode(cst) ? [...acc, cst] : acc;
 }, [] as CstNode[]);
 
+export const leftNode = (cst:CstRelationship):CstNode => cst.leftNode;
+
+export const rightNode = (cst:CstRelationship):CstNode => isCstNode(cst.rightNode) ? cst.rightNode : leftNode(cst.rightNode);
+
 export const relationships = (cst:GramSyntaxNode):CstRelationship[] => reduce(cst, (cst, acc) => {
-  return isCstRelationship(cst) ? [...acc, cst] : acc;
+  return isCstRelationship(cst) ? [cst, ...acc] : acc;
 }, [] as CstRelationship[]);
 
 export const labels = (cst:GramSyntaxNode):Set<string> => reduce(cst, (cst, acc) => {
