@@ -29,6 +29,13 @@
       "options": {
         "targetName": "lint"
       }
+    },
+    {
+      "plugin": "@nx/jest/plugin",
+      "options": {
+        "targetName": "test"
+      },
+      "exclude": ["tools/gram-cli-e2e/**/*"]
     }
   ]
 }

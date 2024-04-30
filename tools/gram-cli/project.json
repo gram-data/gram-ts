@@ -1,0 +1,58 @@
+{
+  "name": "gram-cli",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "tools/gram-cli/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/tools/gram-cli",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "tools/gram-cli/src/main.ts",
+        "tsConfig": "tools/gram-cli/tsconfig.app.json",
+        "assets": ["tools/gram-cli/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "exec": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "gram-cli:build",
+        "watch": false,
+        "inspect": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "gram-cli:build:development"
+        },
+        "production": {
+          "buildTarget": "gram-cli:build:production"
+        }
+      }
+    }
+  }
+}
