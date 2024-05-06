@@ -1,0 +1,12 @@
+
+({  t1 : url`http://somewhere.org`,
+    t2 : md`# Title\nFirst paragraph about something.`,
+    t3 : date`2024-04-05`,
+    t4 : week`2024W35`,
+    t5 : weekDate`2024W35-5`,
+    t6 : time`17:35`,
+    t7 : time`17:42:03.149`,
+    t8 : duration`PT2H3M42S`,
+    t9 : point`30 10`
+})
+

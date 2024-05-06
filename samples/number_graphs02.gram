@@ -1,0 +1,12 @@
+---
+
+(gram
+  (pattern
+    (relationship
+      (node (integer))
+      (single_right (backticked_string))
+      (node (integer))
+    )
+  )
+)
+

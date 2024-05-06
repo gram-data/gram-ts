@@ -1,3 +1,2 @@
-export function gram(): string {
-  return 'gram';
-}
+export * from "./parser/parser";
+export * from "./cst/cst-types"

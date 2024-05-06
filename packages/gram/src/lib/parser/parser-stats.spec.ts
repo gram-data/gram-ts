@@ -1,4 +1,4 @@
-import { GramSyntaxNode, parse, stats, GramSemanticStats } from "./parser";
+import { GramSyntaxNode, parse, stats, GramStats } from "./parser";
 
 describe("gram parsed CST", () => {
   it("stats should count nodes", () => {
@@ -25,17 +25,14 @@ describe("gram parsed CST", () => {
     expect(gramStats).toEqual({
       node: 10,
       single_undirected: 1,
-      single_bidirectional: 0,
       single_right: 1,
       single_left: 1,
       double_undirected: 1,
-      double_bidirectional: 0,
       double_right: 1,
       double_left: 1,
       squiggle_undirected: 1,
-      squiggle_bidirectional: 0,
       squiggle_right: 1,
       squiggle_left: 1
-    } as GramSemanticStats);
+    } as GramStats);
   });
 })

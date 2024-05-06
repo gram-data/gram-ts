@@ -1,0 +1,20 @@
+---
+
+(gram
+  (pattern
+    (relationship 
+      (node)
+      (double_left)
+      (relationship
+        (node)
+        (double_right)
+        (relationship
+          (node)
+        (double_undirected)
+        (node)
+        )
+      )
+    )
+  )
+)
+

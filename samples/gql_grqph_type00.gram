@@ -1,0 +1,6 @@
+
+(:Document {
+  uuid :: string!,
+  title :: string
+})
+

@@ -7,7 +7,11 @@ import { pipe, Option } from "effect"
 const parser = new Parser();
 parser.setLanguage(GramLang);
 
-export const parse = (code:string) => parser.parse(code);
+export interface GramParseTree extends Parser.Tree {
+  rootNode: GramSyntaxNode;
+}
+
+export const parse = (code:string) => parser.parse(code) as GramParseTree;
 
 export const reduce = <T>(cst:GramSyntaxNode, f:(cst:GramSyntaxNode, acc:T) => T, acc:T):T => {
   const result = (cst.children !== null && cst.children.length > 0) ?
@@ -41,22 +45,22 @@ export interface GramSyntaxNode extends Parser.SyntaxNode {
   children: GramSyntaxNode[];
 }
 
-export type GramSemanticStats = Record<GramSemanticElementTypeTag, number>;
+export type GramStats = Partial<Record<GramSemanticElementTypeTag, number>>;
 
-export const emptyStats:GramSemanticStats = {
-  node: 0,
-  single_undirected: 0,
-  single_bidirectional: 0,
-  single_right: 0,
-  single_left: 0,
-  double_undirected: 0,
-  double_bidirectional: 0,
-  double_right: 0,
-  double_left: 0,
-  squiggle_undirected: 0,
-  squiggle_bidirectional: 0,
-  squiggle_right: 0,
-  squiggle_left: 0
+export const emptyStats:GramStats = {
+  // node: 0,
+  // single_undirected: 0,
+  // single_bidirectional: 0,
+  // single_right: 0,
+  // single_left: 0,
+  // double_undirected: 0,
+  // double_bidirectional: 0,
+  // double_right: 0,
+  // double_left: 0,
+  // squiggle_undirected: 0,
+  // squiggle_bidirectional: 0,
+  // squiggle_right: 0,
+  // squiggle_left: 0
 }
 
 export const isCstSyntax = (o:unknown):o is CstSyntax => (typeof o === "object") && (o !== null) && ("type" in o);
@@ -99,7 +103,7 @@ export const stats = (cst:GramSyntaxNode) => reduce(cst, (cst, acc) => {
     isGramSemanticElement(cst) ? Option.some(cst) : Option.none(),
     Option.map((cst) => ({
       ...acc,
-      [cst.type]: acc[cst.type] + 1,
+      [cst.type]: (acc[cst.type] ?? 0) + 1,
     })),
     Option.getOrElse(() => acc)
   )

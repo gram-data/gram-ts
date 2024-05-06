@@ -1,0 +1,12 @@
+---
+
+(gram
+  (pattern
+    (relationship 
+      (node)
+      (single_undirected (symbol) (labels (symbol) (symbol)))
+      (node)
+    )
+  )
+)
+

@@ -1,0 +1,7 @@
+
+{ name : "Gram Graph", created : date`2024-04-05` }
+
+(n)~~>(m)
+
+[s => n, m]
+

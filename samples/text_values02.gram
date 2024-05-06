@@ -1,0 +1,4 @@
+
+({ s : 'This is a sentence, followed by another sentence on another line. 
+Here is the second sentence.' })
+

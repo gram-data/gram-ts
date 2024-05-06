@@ -1,0 +1,7 @@
+---
+
+(gram
+  (pattern
+    (node (record (value_pair (symbol) (measurement))))
+  )
+)
