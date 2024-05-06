@@ -1,9 +1,0 @@
----
-
-(gram
-  (pattern
-    (node)
-    (node)
-  )
-)
-

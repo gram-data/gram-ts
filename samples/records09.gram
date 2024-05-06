@@ -1,9 +1,0 @@
----
-
-(gram
-  (pattern
-    (node 
-      (labels (symbol))
-      (record (type_pair (symbol) (symbol))))
-  )
-)

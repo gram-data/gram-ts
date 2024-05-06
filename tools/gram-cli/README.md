@@ -13,7 +13,12 @@ nx run gram-cli:build
 Then, run it directly:
 
 ```
-
-```
 node dist/tools/gram-cli/main.js --help
 ```
+
+See stats for a gram file:
+
+```
+node dist/tools/gram-cli/main.js stat <filenames>...
+```
+

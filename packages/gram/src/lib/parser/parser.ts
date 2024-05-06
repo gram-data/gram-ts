@@ -36,7 +36,14 @@ export type GramCstRelationshipTypeTag =
   "squiggle_left";
 
 
-export type GramSemanticElementTypeTag = "node" | GramCstRelationshipTypeTag;
+export type GramSemanticElementTypeTag = 
+  "pattern" | 
+  "node" | 
+  "relationship" | 
+  "record" | 
+  "identifier" |
+  "labels" |
+  GramCstRelationshipTypeTag;
 
 export type GramSyntaxElementTypeTag = GramSemanticElementTypeTag;
 
@@ -48,7 +55,11 @@ export interface GramSyntaxNode extends Parser.SyntaxNode {
 export type GramStats = Partial<Record<GramSemanticElementTypeTag, number>>;
 
 export const emptyStats:GramStats = {
+  // pattern: 0,
+  // relationship: 0,
+  // record: 0,
   // node: 0,
+  // identifier: 0,
   // single_undirected: 0,
   // single_bidirectional: 0,
   // single_right: 0,
@@ -78,7 +89,10 @@ export const isGramSemanticElement = (o:unknown):o is GramSyntaxNode => {
     return false;
   }
   switch (o.type) {
+    case "pattern":
     case "node":
+    case "relationship":
+    case "record":
     case "single_undirected":
     case "single_bidirectional":
     case "single_right":
@@ -91,6 +105,8 @@ export const isGramSemanticElement = (o:unknown):o is GramSyntaxNode => {
     case "squiggle_bidirectional":
     case "squiggle_right":
     case "squiggle_left":
+    case "labels":
+    case "identifier":
       return true;
     default:
       return false;
@@ -103,7 +119,8 @@ export const stats = (cst:GramSyntaxNode) => reduce(cst, (cst, acc) => {
     isGramSemanticElement(cst) ? Option.some(cst) : Option.none(),
     Option.map((cst) => ({
       ...acc,
-      [cst.type]: (acc[cst.type] ?? 0) + 1,
+      [cst.type]: (acc[cst.type] ?? 0) + 
+        ((cst.type === "labels") ? cst.namedChildCount : 1)
     })),
     Option.getOrElse(() => acc)
   )

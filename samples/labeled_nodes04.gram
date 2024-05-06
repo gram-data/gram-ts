@@ -1,7 +1,0 @@
----
-
-(gram
-  (pattern
-    (node (integer) (labels (symbol) (symbol)))
-  )
-)

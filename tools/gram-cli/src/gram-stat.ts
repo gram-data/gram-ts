@@ -16,10 +16,12 @@ const gramStats = (filename:string, verbose: boolean) => FileSystem.FileSystem.p
   Effect.map((content) => parse(content)),
   Effect.tap((cst) => (verbose) ? Effect.all([
     Console.log("cst:"),
-    Console.log(cst.rootNode.toString())
+    Console.log(cst.rootNode.toString()),
+    Console.log("")
    ]) : Effect.void),
   Effect.map((cst) => stats(cst.rootNode)),
-  Effect.flatMap((stats) => Console.log("stats:", stats))
+  Effect.map((stats) => ({ source: filename, ...stats })),
+  Effect.flatMap((stats) => Console.log("(:Stats ", stats, ")")),
 )
 
 
