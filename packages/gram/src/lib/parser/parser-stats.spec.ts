@@ -1,29 +1,32 @@
-import { GramSyntaxNode, parse, stats, GramStats } from "./parser";
+import * as Gram from "./parser";
+import type { GramStats } from "./parser";
 
 describe("gram parsed CST", () => {
   it("stats should count nodes", () => {
-    const parseTree = parse("(hello)");
-    const gramStats = stats(parseTree.rootNode as GramSyntaxNode);
+    const parseTree = Gram.parse("(hello)");
+    const gramStats = Gram.stats(parseTree.rootNode);
     expect(gramStats["node"]).toBe(1);
   });
   it("stats should count nodes", () => {
-    const parseTree = parse("(hello),(world)");
-    const gramStats = stats(parseTree.rootNode as GramSyntaxNode);
+    const parseTree = Gram.parse("(hello),(world)");
+    const gramStats = Gram.stats(parseTree.rootNode);
     expect(gramStats["node"]).toBe(2);
   });
 
   it("stats should count relationships", () => {
-    const parseTree = parse("(hello)-->(world)");
-    const gramStats = stats(parseTree.rootNode as GramSyntaxNode);
+    const parseTree = Gram.parse("(hello)-->(world)");
+    const gramStats = Gram.stats(parseTree.rootNode);
     expect(gramStats["single_right"]).toBe(1);
     expect(gramStats["node"]).toBe(2);
   });
 
   it("stats should count relationships", () => {
-    const parseTree = parse("(a)--(b)==(c)~~(d)-->(e)<--(f)==>(g)<==(h)~~>(i)<~~(j)");
-    const gramStats = stats(parseTree.rootNode as GramSyntaxNode);
+    const parseTree = Gram.parse("(a)--(b)==(c)~~(d)-->(e)<--(f)==>(g)<==(h)~~>(i)<~~(j)");
+    const gramStats = Gram.stats(parseTree.rootNode);
     expect(gramStats).toEqual({
       node: 10,
+      pattern: 1,
+      relationship: 9,
       single_undirected: 1,
       single_right: 1,
       single_left: 1,
