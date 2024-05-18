@@ -17,9 +17,9 @@
     "exactOptionalPropertyTypes": true,
     "baseUrl": ".",
     "paths": {
-      "@gram-data/gram": ["packages/gram/src/index.ts"],
-      "@gram-data/gram-ast": ["packages/gram-ast/src/index.ts"],
-      "gramv1": ["packages/gramv1/src/index.ts"]
+      "@gram-data/cypher": ["packages/gram-cypher/src/index.ts"],
+      "@gram-data/sanity": ["packages/sanity/src/index.ts"],
+      "gram-old": ["packages/gram-old/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
