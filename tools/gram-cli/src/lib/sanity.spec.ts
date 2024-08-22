@@ -1,5 +1,4 @@
-
-import * as Gram from '@gram-data/sanity';
+import * as Gram from 'gram';
 
 describe('gram-cli', () => {
   it('should merge () as MERGE ()', () => {

@@ -1,0 +1,18 @@
+
+[entities |
+  @description("The letter a")
+  (:a)
+  @description("The letter b")
+  (:b)
+]
+
+[relations |
+  @description("Number one")
+  ()=[:one]=>()
+]
+
+[patterns |
+  @description("When a one b")
+  (:a)=[:one]=>(:b),
+  (:c)=[:one]=>:d)
+]

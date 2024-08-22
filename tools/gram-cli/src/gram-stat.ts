@@ -17,7 +17,8 @@ import {
 } from 'effect';
 import { Terminal } from '@effect/platform';
 
-import { parse, stats } from '@gram-data/sanity';
+import Gram from 'gram';
+import { AST } from 'gram';
 
 const gramStats = (filename: string, verbose: boolean) =>
   FileSystem.FileSystem.pipe(
@@ -30,7 +31,7 @@ const gramStats = (filename: string, verbose: boolean) =>
           ])
         : Effect.void
     ),
-    Effect.map((content) => parse(content)),
+    Effect.map((content) => Gram.parse(content)),
     Effect.tap((cst) =>
       verbose
         ? Effect.all([
@@ -40,9 +41,11 @@ const gramStats = (filename: string, verbose: boolean) =>
           ])
         : Effect.void
     ),
-    Effect.map((cst) => stats(cst.rootNode)),
+    Effect.map((cst) => Gram.stats(cst.rootNode)),
     Effect.map((stats) => ({ source: filename, ...stats })),
-    Effect.flatMap((stats) => Console.log('(:Stats ', stats, ')'))
+    // Effect.flatMap((stats) => Console.log('(:Stats ', stats, ')'))
+    Effect.map((stats) => AST.node(undefined, ["Gram","Stats"], AST.object(stats))),
+    Effect.flatMap((stats) => Console.log(AST.stringify(stats)))
   );
 
 // gram stat   [-v | --verbose] [--] [<filename>...]

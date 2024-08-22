@@ -1,0 +1,14 @@
+
+@description("A document")
+(:Document {
+  uuid :: string!,
+  title :: string
+})
+
+// equivalent Document definition using an explicit annotation pattern
+[{description:"A document"} |
+  (:Document {
+    uuid :: string!,
+    title :: string
+  })
+]

@@ -1,5 +1,5 @@
 import { cypherSyntax } from './gram-cypher';
-import * as Gram from '@gram-data/sanity';
+import * as Gram from 'gram';
 
 describe('cypherSyntax', () => {
   it('cypherSyntax of () is ()', () => {

@@ -1,6 +1,6 @@
-import type { GramSyntaxNode } from '@gram-data/sanity';
-import * as Gram from '@gram-data/sanity';
-import { isCstNode } from '@gram-data/sanity';
+import type { GramSyntaxNode } from 'gram';
+import * as Gram from 'gram';
+import { isCstNode } from 'gram';
 
 export interface CypherSyntaxNode extends GramSyntaxNode {
   cypher: string;

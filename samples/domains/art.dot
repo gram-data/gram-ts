@@ -1,0 +1,15 @@
+digraph art {
+  actor -> actor [label="works_with"];
+  actor -> actor [label="has_immediate_family_member"];
+  actor -> business [label="is_the_owner_of"];
+  actor -> artefact [label="has_possession_of"];
+  organization -> artefact [label="has_possession_of"];
+  artefact -> culture_group [label="comes_from"];
+  auction_house -> artefact [label="sells"];
+  actor -> artefact [label="purchases"];
+  actor -> auction_house [label="buys_from"];
+  actor -> auction_house [label="works_with"];
+  government_agency -> looter [label="legal_status_change"];
+  actor -> role [label="has_role"];
+  organization -> role [label="has_role"];
+}
