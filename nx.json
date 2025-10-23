@@ -36,5 +36,6 @@
       },
       "exclude": ["tools/gram-cli-e2e/**/*"]
     }
-  ]
+  ],
+  "useLegacyCache": true
 }

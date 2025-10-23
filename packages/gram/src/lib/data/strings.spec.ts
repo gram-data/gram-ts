@@ -10,7 +10,7 @@ describe('Patterns of strings', () => {
     const b = Pattern.of('world'); // b=(world)
     const helloWorld = Pattern.combine([a, b]); // helloWorld=[(hello),(world)]
 
-    expect(Pattern.value(helloWorld)).toBeNull(); // <V> is <string | null>
+    expect(Pattern.value(helloWorld)).toBeUndefined(); // <V> is <string | null>
     expect(Pattern.members(helloWorld).length).toBe(2);
 
     const [hello, world] = Pattern.members(helloWorld);

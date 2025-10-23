@@ -24,6 +24,10 @@ export interface CstLabels extends CstSyntax {
   type: 'labels';
 }
 
+export interface CstLabel extends CstSyntax {
+  type: 'label';
+}
+
 export interface CstProperty extends CstSyntax {
   type: 'property';
   keyNode: CstIdentifier;
@@ -67,6 +71,7 @@ export type CstSyntaxTypeTag =
   | 'property'
   | 'identifier'
   | 'labels'
+  | 'label'
   | CstRelationshipValueTypeTag;
 
 export interface CstRelationshipValue extends CstAttributes {

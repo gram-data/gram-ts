@@ -55,6 +55,7 @@ describe('Extract from CST', () => {
   it('should extract labels', () => {
     const parseTree = parse('(hello:Word:Greeting),(world:Word:Subject)');
     const cstLabels = labels(parseTree.rootNode);
+    // console.log(cstLabels);
     expect(cstLabels).toHaveLength(3);
     expect(cstLabels.has('Word')).toBeTruthy();
     expect(cstLabels.has('Greeting')).toBeTruthy();

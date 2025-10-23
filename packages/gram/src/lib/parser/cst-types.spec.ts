@@ -9,7 +9,8 @@ describe('CstSyntax', () => {
     const cst = parse('()');
     const gram = cst.rootNode;
     const pattern = gram.firstNamedChild as CstPattern;
-    const node = pattern?.firstNamedChild as CstNode;
+    const patternElement = pattern?.firstNamedChild;
+    const node = patternElement?.firstNamedChild as CstNode;
     expect(node.type).toBe('node');
     expect(node.identifierNode).toBeNull();
     expect(node.labelsNode).toBeNull();
@@ -19,7 +20,8 @@ describe('CstSyntax', () => {
     const cst = parse('(a)');
     const gram = cst.rootNode;
     const pattern = gram.firstNamedChild as CstPattern;
-    const node = pattern?.firstNamedChild as CstNode;
+    const patternElement = pattern?.firstNamedChild;
+    const node = patternElement?.firstNamedChild as CstNode;
     expect(node.type).toBe('node');
     expect(node.identifierNode).toBeDefined();
     expect(node.labelsNode).toBeNull();
@@ -29,7 +31,8 @@ describe('CstSyntax', () => {
     const cst = parse('(a:A)');
     const gram = cst.rootNode;
     const pattern = gram.firstNamedChild;
-    const node = pattern?.firstNamedChild as CstNode;
+    const patternElement = pattern?.firstNamedChild;
+    const node = patternElement?.firstNamedChild as CstNode;
     expect(node.type).toBe('node');
     expect(node.identifierNode).toBeDefined();
     expect(node.labelsNode).toBeDefined();
@@ -39,7 +42,8 @@ describe('CstSyntax', () => {
     const cst = parse("(a:A {k:'v'})");
     const gram = cst.rootNode;
     const pattern = gram.firstNamedChild;
-    const node = pattern?.firstNamedChild as CstNode;
+    const patternElement = pattern?.firstNamedChild;
+    const node = patternElement?.firstNamedChild as CstNode;
     expect(node.type).toBe('node');
     expect(node.identifierNode).toBeDefined();
     expect(node.labelsNode).toBeDefined();
@@ -49,7 +53,8 @@ describe('CstSyntax', () => {
     const cst = parse('()-->()');
     const gram = cst.rootNode;
     const pattern = gram.firstNamedChild;
-    const relationship = pattern?.firstNamedChild as CstRelationship;
+    const patternElement = pattern?.firstNamedChild;
+    const relationship = patternElement?.firstNamedChild as CstRelationship;
     expect(relationship.type).toBe('relationship');
     expect(relationship.leftNode).toBeDefined();
     expect(relationship.leftNode.type).toBe('node');

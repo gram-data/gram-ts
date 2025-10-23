@@ -2,7 +2,7 @@ import Parser from 'tree-sitter';
 import type { SyntaxNode } from 'tree-sitter';
 import GramLang from '@gram-data/tree-sitter-gram';
 
-import type { CstNode, CstProperty, CstRelationship, CstLabels, CstRecord, CstSyntaxTypeTag, CstSyntax, CstGram } from './cst-types';
+import type { CstNode, CstProperty, CstRelationship, CstLabels, CstRecord, CstSyntaxTypeTag, CstSyntax, CstGram, CstLabel } from './cst-types';
 
 import { pipe, Option } from 'effect';
 
@@ -74,6 +74,9 @@ export const isCstRelationship = (o: unknown): o is CstRelationship =>
 
 export const isCstLabels = (o: unknown): o is CstLabels =>
   isCstSyntax(o) && o.type === 'labels';
+
+export const isCstLabel = (o: unknown): o is CstLabel =>
+  isCstSyntax(o) && o.type === 'label';
 
 export const isCstRecord = (o: unknown): o is CstRecord =>
   isCstSyntax(o) && o.type === 'record';
@@ -149,12 +152,18 @@ export const relationships = (cst: CstSyntax): CstRelationship[] =>
     [] as CstRelationship[]
   );
 
+/**
+ * Extract set of label symbols.
+ * 
+ * @param cst 
+ * @returns 
+ */
 export const labels = (cst: CstSyntax): Set<string> =>
   reduce(
     cst,
     (cst, acc) => {
-      if (isCstLabels(cst))
-        cst.namedChildren.forEach((child) => acc.add(child.text));
+      if (isCstLabel(cst))
+        if (cst.lastChild !== null) acc.add(cst.lastChild.text);
       return acc;
     },
     new Set<string>()

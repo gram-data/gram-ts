@@ -67,7 +67,7 @@ export const annotation = <V>(value: V, member: Pattern<V>) =>
 export const pair = <V>(left:Pattern<V>, right:Pattern<V>) => make(null, [left,right])
 
 /**
- * A relationship is a pair of member paths that includes information about the pairing.
+ * A relationship is a pair of members that includes information about the pairing.
  * When the members are both nodes, a relationship creates a connected graph.
  * 
  * The relationship can enrich a classic graph with new features:
