@@ -28,13 +28,13 @@ export const parse = (code: string) =>
 export const reduce = <T>(
   cst: CstSyntax,
   f: (cst: CstSyntax, acc: T) => T,
-  acc: T
+  acc: T,
 ): T => {
   const result =
     cst.children?.length > 0
       ? cst.children.reduce(
           (acc, child) => reduce(child as CstSyntax, f, acc),
-          acc
+          acc,
         )
       : acc;
   return f(cst, result);
@@ -46,7 +46,7 @@ export type Treelike<T> = {
 
 export const map = <T extends Record<string, unknown>>(
   cst: CstSyntax,
-  f: (cst: CstSyntax) => T
+  f: (cst: CstSyntax) => T,
 ): Treelike<T> => ({
   ...f(cst),
   children: cst.children.map((child) => map(child as CstSyntax, f)),
@@ -107,10 +107,10 @@ export const stats = (cst: CstSyntax) =>
             (acc[cst.type] ?? 0) +
             (cst.type === 'labels' ? cst.namedChildCount : 1),
         })),
-        Option.getOrElse(() => acc)
+        Option.getOrElse(() => acc),
       );
     },
-    emptyStats
+    emptyStats,
   );
 
 export const nodes = (cst: CstSyntax): CstNode[] =>
@@ -119,7 +119,7 @@ export const nodes = (cst: CstSyntax): CstNode[] =>
     (cst, acc) => {
       return isCstNode(cst) ? [...acc, cst] : acc;
     },
-    [] as CstNode[]
+    [] as CstNode[],
   );
 
 export const leftNode = (cst: CstRelationship): CstNode => cst.leftNode;
@@ -133,14 +133,14 @@ export const relationships = (cst: CstSyntax): CstRelationship[] =>
     (cst, acc) => {
       return isCstRelationship(cst) ? [cst, ...acc] : acc;
     },
-    [] as CstRelationship[]
+    [] as CstRelationship[],
   );
 
 /**
  * Extract set of label symbols.
- * 
- * @param cst 
- * @returns 
+ *
+ * @param cst
+ * @returns
  */
 export const labels = (cst: CstSyntax): Set<string> =>
   reduce(
@@ -155,7 +155,7 @@ export const labels = (cst: CstSyntax): Set<string> =>
       }
       return acc;
     },
-    new Set<string>()
+    new Set<string>(),
   );
 
 export const properties = (cst: CstSyntax): CstProperty[] =>
@@ -167,7 +167,7 @@ export const properties = (cst: CstSyntax): CstProperty[] =>
         ? [...acc, ...(cst.namedChildren as unknown as CstProperty[])]
         : acc;
     },
-    [] as CstProperty[]
+    [] as CstProperty[],
   );
 
 export const propertyKey = (cst: CstProperty): string => cst.keyNode.text;

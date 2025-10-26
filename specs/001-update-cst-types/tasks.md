@@ -1,6 +1,5 @@
 ---
-
-description: "Task list for updating Gram CST types and corpus regression coverage"
+description: 'Task list for updating Gram CST types and corpus regression coverage'
 ---
 
 # Tasks: Update Gram CST Type Definitions
@@ -82,8 +81,8 @@ description: "Task list for updating Gram CST types and corpus regression covera
 
 **Purpose**: Final documentation and quality gates ahead of release.
 
-- [ ] T015 Update `packages/gram/README.md` with stringify usage guidance and upgrade notes.
-- [ ] T016 Run `npx nx format:write packages-gram && npx nx lint packages-gram && npx nx test packages-gram` and capture results in the PR description.
+- [x] T015 Update `packages/gram/README.md` with stringify usage guidance and upgrade notes.
+- [x] T016 Run `npx nx format:write packages-gram && npx nx lint gram && npx nx test gram` and capture results in the PR description.
 
 ---
 

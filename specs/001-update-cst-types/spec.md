@@ -5,13 +5,13 @@
 **Status**: Draft  
 **Input**: User description: "Update the gram CST type definitions to match the latest tree-sitter-gram grammar. Syntax nodes may have been added, removed or changed. Testing should borrow from the tree-sitter-gram corpus for positive and negative examples (marked with :error)"
 
-## User Scenarios & Testing *(mandatory)*
+## User Scenarios & Testing _(mandatory)_
 
 <!--
   IMPORTANT: User stories should be PRIORITIZED as user journeys ordered by importance.
   Each user story/journey must be INDEPENDENTLY TESTABLE - meaning if you implement just ONE of them,
   you should still have a viable MVP (Minimum Viable Product) that delivers value.
-  
+
   Assign priorities (P1, P2, P3, etc.) to each story, where P1 is the most critical.
   Think of each story as a standalone slice of functionality that can be:
   - Developed independently
@@ -55,7 +55,7 @@ As a tooling engineer integrating Gram, I need automated tests that replay the t
 - Corpus includes UTF-8 or escaped-character samples; confirm tests cover these without truncation or incorrect encoding handling.
 - `:error` samples overlap with newly valid syntax; tests must distinguish updated grammar rules from true errors.
 
-## Requirements *(mandatory)*
+## Requirements _(mandatory)_
 
 ### Functional Requirements
 
@@ -66,12 +66,12 @@ As a tooling engineer integrating Gram, I need automated tests that replay the t
 - **FR-005**: The regression suite MUST run tree-sitter-gram `:error` samples and assert that each produces a failure mode highlighting the offending syntax element.
 - **FR-006**: Documentation for CST node usage in `packages/gram/README.md` (or successor doc) MUST outline changes and guidance for downstream developers upgrading from the prior release.
 
-### Key Entities *(include if feature involves data)*
+### Key Entities _(include if feature involves data)_
 
 - **CST Node Definition**: Describes the shape, fields, and relationships of a syntax node emitted by the parser; used to generate TypeScript typings and downstream tooling expectations.
 - **Corpus Sample**: A positive or negative grammar example drawn from tree-sitter-gram, paired with metadata about expected parsing outcomes for regression validation.
 
-## Success Criteria *(mandatory)*
+## Success Criteria _(mandatory)_
 
 ### Measurable Outcomes
 
@@ -80,7 +80,7 @@ As a tooling engineer integrating Gram, I need automated tests that replay the t
 - **SC-003**: Upgrade guide published with the release receives sign-off from at least one downstream consumer confirming the instructions were sufficient to adopt the changes within one sprint.
 - **SC-004**: All existing lint, build, and regression quality gates for impacted Gram packages complete without new failures on the release candidate branch.
 
-## Developer Experience Commitments *(mandatory)*
+## Developer Experience Commitments _(mandatory)_
 
 - **DX-001**: CLI or API documentation MUST be updated in `packages/gram/README.md` and the tree-sitter integration notes so developers can map grammar nodes to CST types during upgrades.
 - **DX-002**: Samples in `samples/` MUST include at least one new positive and one `:error` example tied to the grammar update, or explicitly justify why existing samples remain sufficient.

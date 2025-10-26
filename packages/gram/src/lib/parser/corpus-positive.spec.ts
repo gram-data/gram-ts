@@ -26,5 +26,5 @@ describe('tree-sitter corpus (success cases)', () => {
 
 const tokenize = (value: string): string[] =>
   (value.match(/\(|\)|[^\s()]+/g) ?? []).filter(
-    (token) => !token.endsWith(':')
+    (token) => !token.endsWith(':'),
   );

@@ -1,4 +1,3 @@
-import { pipe } from 'effect';
 import { some, none} from 'effect/Option'
 import type { Option } from 'effect/Option'
 

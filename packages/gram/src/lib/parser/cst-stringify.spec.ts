@@ -36,7 +36,7 @@ describe('cst stringify', () => {
     const expected = [
       '(gram',
       '  (pattern',
-        '    elements: (relationship',
+      '    elements: (relationship',
       '      left: (node)',
       '      kind: (right_arrow)',
       '      right: (node))))',
@@ -51,7 +51,7 @@ describe('cst stringify', () => {
       includeFields: false,
     });
     expect(output.replace(/\s+/g, ' ').trim()).toBe(
-      '(gram (record (property (symbol) (array (integer) (integer) (integer)))))'
+      '(gram (record (property (symbol) (array (integer) (integer) (integer)))))',
     );
   });
 });

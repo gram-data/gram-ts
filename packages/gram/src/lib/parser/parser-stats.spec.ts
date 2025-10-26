@@ -23,7 +23,7 @@ describe('Stats from CST', () => {
 
   it('should count relationships', () => {
     const parseTree = Gram.parse(
-      '(a)--(b)==(c)~~(d)-->(e)<--(f)==>(g)<==(h)~~>(i)<~~(j)'
+      '(a)--(b)==(c)~~(d)-->(e)<--(f)==>(g)<==(h)~~>(i)<~~(j)',
     );
     const gramStats = Gram.stats(parseTree.rootNode);
     expect(gramStats).toEqual({

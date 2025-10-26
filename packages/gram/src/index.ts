@@ -9,4 +9,4 @@ export default {
   parse,
   stats,
   stringifyCst,
-}
+};

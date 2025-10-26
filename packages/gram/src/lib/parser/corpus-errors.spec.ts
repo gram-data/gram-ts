@@ -15,7 +15,7 @@ describe('tree-sitter corpus (error cases)', () => {
       expect(tree.rootNode.hasError).toBe(true);
 
       const errorNodes = collectErrorNodes(
-        tree.rootNode as unknown as SyntaxNode
+        tree.rootNode as unknown as SyntaxNode,
       );
       expect(errorNodes.length).toBeGreaterThan(0);
 
@@ -26,7 +26,7 @@ describe('tree-sitter corpus (error cases)', () => {
         expect(diagnostic.pointerLine.trim()).toBe('^');
         const sourceLines = testCase.source.split(/\r?\n/u);
         expect(diagnostic.sourceLine).toBe(
-          sourceLines[diagnostic.line - 1] ?? ''
+          sourceLines[diagnostic.line - 1] ?? '',
         );
       }
     });
@@ -66,7 +66,7 @@ interface ErrorDiagnostic {
 
 const formatErrorDiagnostic = (
   errorNode: SyntaxNode,
-  testCase: CorpusCase
+  testCase: CorpusCase,
 ): ErrorDiagnostic => {
   const { row, column } = errorNode.startPosition;
   const sourceLines = testCase.source.split(/\r?\n/u);
@@ -78,8 +78,8 @@ const formatErrorDiagnostic = (
   const descriptor = isMissing
     ? `expected ${errorNode.type}`
     : snippet.length > 0
-    ? `unexpected "${snippet}"`
-    : 'unexpected end of input';
+      ? `unexpected "${snippet}"`
+      : 'unexpected end of input';
 
   return {
     summary: `${testCase.file} :: ${testCase.title} (case #${

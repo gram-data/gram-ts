@@ -15,10 +15,7 @@ export interface StringifyOptions {
 }
 
 export class UnknownCstNodeError extends Error {
-  constructor(
-    nodeType: string,
-    context: { path: string[] }
-  ) {
+  constructor(nodeType: string, context: { path: string[] }) {
     const path = context.path.length > 0 ? context.path.join(' > ') : '(root)';
     super(`Unknown CST node type "${nodeType}" encountered at ${path}`);
     this.name = 'UnknownCstNodeError';
@@ -67,7 +64,7 @@ interface InternalOptions {
 
 export const stringifyCst = (
   root: CstSyntax,
-  options: StringifyOptions = {}
+  options: StringifyOptions = {},
 ): string => {
   const internal: InternalOptions = {
     includeRanges: options.includeRanges ?? true,
@@ -82,7 +79,7 @@ function formatNode(
   node: SyntaxNode,
   options: InternalOptions,
   indent: number,
-  path: string[]
+  path: string[],
 ): string[] {
   const indentStr = '  '.repeat(indent);
   const rangeSegment = options.includeRanges
@@ -101,12 +98,10 @@ function formatNode(
       ? [...path, `${node.type}.${fieldName}`]
       : [...path, node.type];
     const typedChild = ensureKnownType(child, nextPathBase);
-    const childLines = formatNode(
-      typedChild,
-      options,
-      indent + 1,
-      [...nextPathBase, typedChild.type]
-    );
+    const childLines = formatNode(typedChild, options, indent + 1, [
+      ...nextPathBase,
+      typedChild.type,
+    ]);
     const expectedIndent = '  '.repeat(indent + 1);
     const prefix = `${expectedIndent}${
       fieldName && options.includeFields ? `${fieldName}: ` : ''
@@ -145,10 +140,7 @@ function namedChildEntries(node: SyntaxNode): Array<{
   return entries;
 }
 
-function ensureKnownType(
-  node: SyntaxNode,
-  path: string[]
-): SyntaxNode {
+function ensureKnownType(node: SyntaxNode, path: string[]): SyntaxNode {
   const type = node.type as CstSyntaxTypeTag;
   if (KNOWN_TYPES.has(type)) {
     return node;

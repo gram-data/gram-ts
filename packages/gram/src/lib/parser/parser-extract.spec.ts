@@ -46,7 +46,7 @@ describe('Extract from CST', () => {
     expect(rightNode(cstRelationships[0]).identifierNode?.text).toBe('world');
     expect(cstRelationships[0].kindNode.type).toBe('right_arrow');
     expect(rightNode(cstRelationships[0]).id).toBe(
-      leftNode(cstRelationships[1]).id
+      leftNode(cstRelationships[1]).id,
     );
     expect(leftNode(cstRelationships[1]).identifierNode?.text).toBe('world');
     expect(cstRelationships[1].kindNode.identifierNode?.text).toBe('from');

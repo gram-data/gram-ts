@@ -85,10 +85,7 @@ export type CstScalarValueNode =
   | CstSymbol
   | CstTaggedString;
 
-export type CstValueNode =
-  | CstScalarValueNode
-  | CstArray
-  | CstMap;
+export type CstValueNode = CstScalarValueNode | CstArray | CstMap;
 
 export type CstAttributeNode =
   | CstIdentifierNode
@@ -111,15 +108,15 @@ interface AttributedElement<TType extends CstSyntaxTypeTag>
   readonly recordNode: CstRecord | null;
 }
 
-export interface CstGram extends BaseNode<'gram'> {}
+export type CstGram = BaseNode<'gram'>;
 
 export interface CstPattern extends BaseNode<'pattern'> {
   readonly annotationsNode: CstAnnotations | null;
 }
 
-export interface CstSubject extends AttributedElement<'subject'> {}
+export type CstSubject = AttributedElement<'subject'>;
 
-export interface CstNode extends AttributedElement<'node'> {}
+export type CstNode = AttributedElement<'node'>;
 
 export interface CstRelationship extends BaseNode<'relationship'> {
   readonly kindNode: CstRelationshipArrow;
@@ -127,32 +124,30 @@ export interface CstRelationship extends BaseNode<'relationship'> {
   readonly rightNode: CstNode | CstRelationship;
 }
 
-export interface CstRightArrow extends AttributedElement<'right_arrow'> {}
-export interface CstLeftArrow extends AttributedElement<'left_arrow'> {}
-export interface CstBidirectionalArrow
-  extends AttributedElement<'bidirectional_arrow'> {}
-export interface CstUndirectedArrow
-  extends AttributedElement<'undirected_arrow'> {}
+export type CstRightArrow = AttributedElement<'right_arrow'>;
+export type CstLeftArrow = AttributedElement<'left_arrow'>;
+export type CstBidirectionalArrow = AttributedElement<'bidirectional_arrow'>;
+export type CstUndirectedArrow = AttributedElement<'undirected_arrow'>;
 
-export interface CstAnnotations extends BaseNode<'annotations'> {}
+export type CstAnnotations = BaseNode<'annotations'>;
 
 export interface CstAnnotation extends BaseNode<'annotation'> {
   readonly keyNode: CstSymbol;
   readonly valueNode: CstValueNode;
 }
 
-export interface CstLabels extends BaseNode<'labels'> {}
+export type CstLabels = BaseNode<'labels'>;
 
 export interface CstProperty extends BaseNode<'property'> {
   readonly keyNode: CstIdentifierNode;
   readonly valueNode: CstValueNode;
 }
 
-export interface CstRecord extends BaseNode<'record'> {}
+export type CstRecord = BaseNode<'record'>;
 
-export interface CstArray extends BaseNode<'array'> {}
+export type CstArray = BaseNode<'array'>;
 
-export interface CstMap extends BaseNode<'map'> {}
+export type CstMap = BaseNode<'map'>;
 
 export interface CstMapping extends BaseNode<'mapping'> {
   readonly keyNode: CstIdentifierNode;
@@ -168,15 +163,15 @@ export interface CstReference extends BaseNode<'reference'> {
   readonly identifierNode: CstIdentifierNode;
 }
 
-export interface CstSubPattern extends BaseNode<'sub_pattern'> {}
+export type CstSubPattern = BaseNode<'sub_pattern'>;
 
-export interface CstBooleanLiteral extends BaseNode<'boolean_literal'> {}
-export interface CstDecimal extends BaseNode<'decimal'> {}
-export interface CstHexadecimal extends BaseNode<'hexadecimal'> {}
-export interface CstInteger extends BaseNode<'integer'> {}
-export interface CstMeasurement extends BaseNode<'measurement'> {}
-export interface CstOctal extends BaseNode<'octal'> {}
-export interface CstStringContent extends BaseNode<'string_content'> {}
+export type CstBooleanLiteral = BaseNode<'boolean_literal'>;
+export type CstDecimal = BaseNode<'decimal'>;
+export type CstHexadecimal = BaseNode<'hexadecimal'>;
+export type CstInteger = BaseNode<'integer'>;
+export type CstMeasurement = BaseNode<'measurement'>;
+export type CstOctal = BaseNode<'octal'>;
+export type CstStringContent = BaseNode<'string_content'>;
 export interface CstStringLiteral extends BaseNode<'string_literal'> {
   readonly contentNode: CstStringContent | null;
 }
@@ -184,4 +179,4 @@ export interface CstTaggedString extends BaseNode<'tagged_string'> {
   readonly tagNode: CstSymbol | null;
   readonly contentNode: CstStringContent | null;
 }
-export interface CstSymbol extends BaseNode<'symbol'> {}
+export type CstSymbol = BaseNode<'symbol'>;

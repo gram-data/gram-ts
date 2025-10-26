@@ -19,12 +19,11 @@ export interface LoadCorpusOptions {
   root?: string;
 }
 
-const HEADER_DELIMITER = '==================';
 const BLOCK_PATTERN =
   /==================\n([^=\n]+)\n(?:(:error)\n)?==================\n\n([\s\S]*?)\n---\n\n([\s\S]*?)(?=\n==================|\s*$)/g;
 
 export const loadCorpusCases = (
-  options: LoadCorpusOptions = {}
+  options: LoadCorpusOptions = {},
 ): CorpusCase[] => {
   const root = resolveCorpusRoot(options.root);
   const files = fs
@@ -75,8 +74,5 @@ const resolveCorpusRoot = (override?: string): string => {
   if (process.env.GRAM_CORPUS_ROOT) {
     return process.env.GRAM_CORPUS_ROOT;
   }
-  return path.resolve(
-    __dirname,
-    '../../../../../tree-sitter-gram/test/corpus'
-  );
+  return path.resolve(__dirname, '../../../../../tree-sitter-gram/test/corpus');
 };

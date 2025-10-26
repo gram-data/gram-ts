@@ -16,7 +16,7 @@ interface StringifyOptions {
 
 declare function stringifyCst(
   root: CstNode,
-  options?: StringifyOptions
+  options?: StringifyOptions,
 ): string;
 ```
 

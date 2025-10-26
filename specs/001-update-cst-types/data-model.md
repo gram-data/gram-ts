@@ -1,6 +1,7 @@
 ## Data Model
 
 ### Entity: CST Node Definition
+
 - **Purpose**: Represents a grammar node emitted by tree-sitter-gram with its named status, child fields, and aliases.
 - **Key Fields**:
   - `type` (string) — canonical node name (`right_arrow`, `subject`, etc.).
@@ -16,6 +17,7 @@
   - Field multiplicity (`one`, `zero_or_one`, `one_or_more`) MUST match grammar definitions.
 
 ### Entity: SExpression Fragment
+
 - **Purpose**: Captures the serialized form of a CST node or token for parity with tree-sitter CLI output.
 - **Key Fields**:
   - `symbol` (string) — node or token label used in the s-expression.
@@ -30,6 +32,7 @@
   - Symbols must be normalized using grammar-defined merges (`-->`, `==>`, `~~>` → `right_arrow`).
 
 ### Entity: Corpus Case
+
 - **Purpose**: Encapsulates one example (positive or `:error`) from the tree-sitter corpus for regression verification.
 - **Key Fields**:
   - `name` (string) — derived from file and block label.

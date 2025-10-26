@@ -29,7 +29,7 @@ Refresh the `packages/gram` CST type catalog to mirror the latest tree-sitter-gr
 
 ## Constitution Check
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+_GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 
 - [x] **Design for Composable Grammar** — All CST updates stay within `packages/gram/src/lib/parser/`; exports remain via `src/index.ts`, and Nx tags prevent leaking internal helpers to other packages.
 - [x] **Code Quality: Typed and Traceable Modules** — Maintain strict TypeScript coverage in `cst-types.ts`, introduce well-documented stringifier modules, and expand specs to protect named exports from regression.
@@ -51,6 +51,7 @@ specs/[###-feature]/
 ```
 
 ### Source Code (repository root)
+
 <!--
   ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
   for this feature. Delete unused options and expand the chosen structure with
@@ -83,6 +84,6 @@ tree-sitter-gram/
 
 > **Fill ONLY if Constitution Check has violations that must be justified**
 
-| Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| None | N/A | Existing architecture satisfies constitutional gates |
+| Violation | Why Needed | Simpler Alternative Rejected Because                 |
+| --------- | ---------- | ---------------------------------------------------- |
+| None      | N/A        | Existing architecture satisfies constitutional gates |
