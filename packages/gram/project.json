@@ -34,8 +34,19 @@
       "executor": "@nx/vite:test",
       "outputs": ["{options.reportsDirectory}"],
       "options": {
-        "reportsDirectory": "../../coverage/packages/gram"
-      }
+        "reportsDirectory": "../../coverage/packages/gram",
+        "passthroughEnvironment": [
+          "GRAM_CORPUS_ROOT"
+        ]
+      },
+      "inputs": [
+        "default",
+        "^default",
+        {
+          "input": "{workspaceRoot}/tree-sitter-gram/test/corpus/**/*",
+          "projects": []
+        }
+      ]
     }
   }
 }
