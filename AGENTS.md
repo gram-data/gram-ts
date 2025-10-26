@@ -27,6 +27,8 @@ Vitest drives unit coverage through the Nx Vite executor. Place specs alongside 
 Write commits like the current history: short, imperative summaries (`reorganize samples into subdirs`) with optional detail in the body. Keep unrelated formatting out of feature commits. Pull requests should capture motivation, outline functional changes, and link issues when available. Attach screenshots or console output for CLI surfaces. Close with the exact Nx commands you executed (lint, test, build) so reviewers can replay your validation.
 
 ## Active Technologies
+- TypeScript 5.9 (Nx toolchain) + @effect/cli, @effect/io runtime, @gram-data/tree-sitter-gram parser bindings, shared logic from `packages/gram` and `packages/data` (001-add-parse-command)
+- N/A (CLI operates on in-memory grammar artifacts) (001-add-parse-command)
 
 - TypeScript 5.9.3 (Nx-managed) + tree-sitter 0.25, @gram-data/tree-sitter-gram 0.2.x, Nx 22 toolchain (001-update-cst-types)
 - N/A — in-memory CST processing only (001-update-cst-types)
