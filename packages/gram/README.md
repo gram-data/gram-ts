@@ -34,7 +34,7 @@ The stringifier mirrors the Tree-sitter CLI output and raises an `UnknownCstNode
 
 ## Upgrade notes (001-update-cst-types)
 
-- `cst-types.ts` aligns with the Tree-sitter grammar as of ree-sitter `0.25`.
+- `cst-types.ts` aligns with the Tree-sitter grammar as of tree-sitter `0.25`.
 - New `stringifyCst` options let you hide byte ranges (`includeRanges: false`) or omit field labels (`includeFields: false`) for concise diffs.
 - Corpus-driven regression tests now run with `nx test gram`, ensuring positive fixtures stringify exactly like the CLI and `:error` samples surface meaningful diagnostics. See `samples/corpus/` for examples of successful and failing patterns.
 
