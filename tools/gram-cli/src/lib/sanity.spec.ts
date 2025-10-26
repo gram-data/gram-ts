@@ -1,8 +1,8 @@
-import * as Gram from 'gram';
+import { Parser } from 'gram';
 
 describe('gram-cli', () => {
   it('should merge () as MERGE ()', () => {
-    const cst = Gram.parse('()');
+    const cst = Parser.parse('()');
     expect(cst.rootNode.type).toBe('gram');
   });
 });

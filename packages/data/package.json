@@ -1,7 +1,9 @@
 {
   "name": "@gram-data/data",
   "version": "0.0.1",
-  "dependencies": {},
+  "dependencies": {
+    "fp-ts": "^2.16.11"
+  },
   "type": "commonjs",
   "main": "./index.cjs",
   "typings": "./index.d.ts"

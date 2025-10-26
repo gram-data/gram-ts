@@ -43,14 +43,16 @@ export const loadCorpusCases = (
       const [, title, errorFlag, sourceRaw, expectedRaw] = match;
       const source = trimTrailingNewlines(sourceRaw);
       const expected = trimTrailingNewlines(expectedRaw);
-      cases.push({
+      const corpusCase: CorpusCase = {
         file,
         title: title.trim(),
         index,
         source,
-        expected: expected.length > 0 ? expected : undefined,
         isError: Boolean(errorFlag),
-      });
+        ...(expected.length > 0 ? { expected } : {}),
+      };
+
+      cases.push(corpusCase);
       index += 1;
     }
   }
@@ -71,8 +73,8 @@ const resolveCorpusRoot = (override?: string): string => {
   if (override) {
     return override;
   }
-  if (process.env.GRAM_CORPUS_ROOT) {
-    return process.env.GRAM_CORPUS_ROOT;
+  if (process.env['GRAM_CORPUS_ROOT']) {
+    return process.env['GRAM_CORPUS_ROOT'];
   }
   return path.resolve(__dirname, '../../../../../tree-sitter-gram/test/corpus');
 };
