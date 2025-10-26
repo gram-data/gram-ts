@@ -8,6 +8,10 @@ export interface StringifyOptions {
    * output just like the tree-sitter CLI.
    */
   includeRanges?: boolean;
+  /**
+   * When true (default), include field names (`left:`, `value:`) in the output.
+   */
+  includeFields?: boolean;
 }
 
 export class UnknownCstNodeError extends Error {
@@ -58,6 +62,7 @@ const KNOWN_TYPES = new Set<CstSyntaxTypeTag>(KNOWN_TYPE_LIST);
 
 interface InternalOptions {
   includeRanges: boolean;
+  includeFields: boolean;
 }
 
 export const stringifyCst = (
@@ -66,6 +71,7 @@ export const stringifyCst = (
 ): string => {
   const internal: InternalOptions = {
     includeRanges: options.includeRanges ?? true,
+    includeFields: options.includeFields ?? true,
   };
   const normalisedRoot = ensureKnownType(root, [root.type]);
   const lines = formatNode(normalisedRoot, internal, 0, [normalisedRoot.type]);
@@ -102,7 +108,9 @@ function formatNode(
       [...nextPathBase, typedChild.type]
     );
     const expectedIndent = '  '.repeat(indent + 1);
-    const prefix = `${expectedIndent}${fieldName ? `${fieldName}: ` : ''}`;
+    const prefix = `${expectedIndent}${
+      fieldName && options.includeFields ? `${fieldName}: ` : ''
+    }`;
     if (childLines.length > 0) {
       childLines[0] = childLines[0].startsWith(expectedIndent)
         ? prefix + childLines[0].slice(expectedIndent.length)

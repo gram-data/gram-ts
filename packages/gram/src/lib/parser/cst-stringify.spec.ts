@@ -36,11 +36,22 @@ describe('cst stringify', () => {
     const expected = [
       '(gram',
       '  (pattern',
-      '    elements: (relationship',
+        '    elements: (relationship',
       '      left: (node)',
       '      kind: (right_arrow)',
       '      right: (node))))',
     ].join('\n');
     expect(output).toBe(expected);
+  });
+
+  it('can suppress field names for corpus comparisons', () => {
+    const tree = parse('{ count: [1,2,3] }');
+    const output = stringifyCst(tree.rootNode, {
+      includeRanges: false,
+      includeFields: false,
+    });
+    expect(output.replace(/\s+/g, ' ').trim()).toBe(
+      '(gram (record (property (symbol) (array (integer) (integer) (integer)))))'
+    );
   });
 });

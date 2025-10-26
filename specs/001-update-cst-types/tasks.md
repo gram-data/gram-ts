@@ -65,14 +65,14 @@ description: "Task list for updating Gram CST types and corpus regression covera
 
 ### Tests for User Story 2 ⚠️
 
-- [ ] T010 [P] [US2] Create `packages/gram/src/lib/parser/corpus-loader.ts` to iterate corpus files and emit positive vs. error scenarios.
-- [ ] T011 [P] [US2] Add `packages/gram/src/lib/parser/corpus-positive.spec.ts` asserting stringify parity against the tree-sitter parse output for all positive samples.
-- [ ] T012 [P] [US2] Add `packages/gram/src/lib/parser/corpus-errors.spec.ts` ensuring `:error` samples trigger descriptive parser failures.
+- [x] T010 [P] [US2] Create `packages/gram/src/lib/parser/corpus-loader.ts` to iterate corpus files and emit positive vs. error scenarios.
+- [x] T011 [P] [US2] Add `packages/gram/src/lib/parser/corpus-positive.spec.ts` asserting stringify parity against the tree-sitter parse output for all positive samples.
+- [x] T012 [P] [US2] Add `packages/gram/src/lib/parser/corpus-errors.spec.ts` ensuring `:error` samples trigger descriptive parser failures.
 
 ### Implementation for User Story 2
 
-- [ ] T013 [US2] Integrate corpus fixtures into tests via updates to `packages/gram/project.json` resources so Nx test runs include the corpus directory.
-- [ ] T014 [US2] Add new example files under `samples/corpus/` showcasing a passing and `:error` case with expected s-expressions.
+- [x] T013 [US2] Integrate corpus fixtures into tests via updates to `packages/gram/project.json` resources so Nx test runs include the corpus directory.
+- [x] T014 [US2] Add new example files under `samples/corpus/` showcasing a passing and `:error` case with expected s-expressions.
 
 **Checkpoint**: Full regression suite covering positive and error corpus paths with documentation examples refreshed.
 
