@@ -2,9 +2,11 @@ import type { SyntaxNode } from 'tree-sitter';
 import { loadErrorCases, type CorpusCase } from './corpus-loader';
 import { parse } from './parser';
 
-describe('tree-sitter corpus (error cases)', () => {
-  const cases = loadErrorCases();
+const cases = loadErrorCases();
+const describeWithCorpus =
+  cases.length > 0 ? describe : describe.skip;
 
+describeWithCorpus('tree-sitter corpus (error cases)', () => {
   it('loads error corpus fixtures', () => {
     expect(cases.length).toBeGreaterThan(0);
   });

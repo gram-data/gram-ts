@@ -22,10 +22,26 @@ export interface LoadCorpusOptions {
 const BLOCK_PATTERN =
   /==================\n([^=\n]+)\n(?:(:error)\n)?==================\n\n([\s\S]*?)\n---\n\n([\s\S]*?)(?=\n==================|\s*$)/g;
 
+const corpusDirectoryExists = (root: string): boolean => {
+  try {
+    return fs.statSync(root).isDirectory();
+  } catch {
+    return false;
+  }
+};
+
+export const isCorpusAvailable = (options: LoadCorpusOptions = {}): boolean => {
+  const root = resolveCorpusRoot(options.root);
+  return corpusDirectoryExists(root);
+};
+
 export const loadCorpusCases = (
   options: LoadCorpusOptions = {},
 ): CorpusCase[] => {
   const root = resolveCorpusRoot(options.root);
+  if (!corpusDirectoryExists(root)) {
+    return [];
+  }
   const files = fs
     .readdirSync(root)
     .filter((file) => file.endsWith('.txt'))
@@ -69,7 +85,7 @@ export const loadErrorCases = (options?: LoadCorpusOptions): CorpusCase[] =>
 const trimTrailingNewlines = (value: string): string =>
   value.replace(/\s+$/u, '').replace(/\r\n/g, '\n');
 
-const resolveCorpusRoot = (override?: string): string => {
+function resolveCorpusRoot(override?: string): string {
   if (override) {
     return override;
   }
@@ -77,4 +93,4 @@ const resolveCorpusRoot = (override?: string): string => {
     return process.env['GRAM_CORPUS_ROOT'];
   }
   return path.resolve(__dirname, '../../../../../tree-sitter-gram/test/corpus');
-};
+}

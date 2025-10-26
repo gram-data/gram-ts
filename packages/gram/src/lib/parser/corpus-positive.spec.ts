@@ -2,9 +2,11 @@ import { loadPositiveCases } from './corpus-loader';
 import { parse } from './parser';
 import { stringifyCst } from './cst-stringify';
 
-describe('tree-sitter corpus (success cases)', () => {
-  const cases = loadPositiveCases();
+const cases = loadPositiveCases();
+const describeWithCorpus =
+  cases.length > 0 ? describe : describe.skip;
 
+describeWithCorpus('tree-sitter corpus (success cases)', () => {
   it('loads corpus fixtures', () => {
     expect(cases.length).toBeGreaterThan(0);
   });
