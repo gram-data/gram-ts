@@ -23,8 +23,8 @@ description: "Task list for updating Gram CST types and corpus regression covera
 
 **Purpose**: Prepare local grammar assets and workspace dependencies needed by every story.
 
-- [ ] T001 Install workspace dependencies via `npm ci` recorded in package.json.
-- [ ] T002 Rebuild tree-sitter grammar artifacts by running `npm run build` inside `tree-sitter-gram/package.json`.
+- [x] T001 Install workspace dependencies via `npm ci` recorded in package.json.
+- [x] T002 Rebuild tree-sitter grammar artifacts by running `npm run build` inside `tree-sitter-gram/package.json`.
 
 ---
 
@@ -32,8 +32,8 @@ description: "Task list for updating Gram CST types and corpus regression covera
 
 **Purpose**: Shared helpers and configuration that all user stories require.
 
-- [ ] T003 Create `packages/gram/src/lib/parser/grammar-metadata.ts` to expose typed access to `tree-sitter-gram/tree-sitter.json`.
-- [ ] T004 Update `packages/gram/project.json` test target to register the upcoming corpus regression suites.
+- [x] T003 Create `packages/gram/src/lib/parser/grammar-metadata.ts` to expose typed access to `tree-sitter-gram/tree-sitter.json`.
+- [x] T004 Update `packages/gram/project.json` test target to register the upcoming corpus regression suites.
 
 **Checkpoint**: Grammar metadata helper and Nx test wiring ready—user stories can now proceed.
 
@@ -47,11 +47,11 @@ description: "Task list for updating Gram CST types and corpus regression covera
 
 ### Implementation for User Story 1
 
-- [ ] T005 [US1] Update `packages/gram/src/lib/parser/cst-types.ts` to align node definitions and metadata with the latest grammar.
-- [ ] T006 [US1] Expand `packages/gram/src/lib/parser/cst-types.spec.ts` to assert coverage for every grammar node and verify removed definitions are pruned.
-- [ ] T007 [US1] Implement `packages/gram/src/lib/parser/cst-stringify.ts` to output s-expressions matching tree-sitter CLI conventions, including merged arrow nodes.
-- [ ] T008 [US1] Add `packages/gram/src/lib/parser/cst-stringify.spec.ts` validating stringify output for representative patterns and optional children.
-- [ ] T009 [US1] Export the new stringify API through `packages/gram/src/index.ts` and update `packages/gram/src/lib/stringify/index.ts`.
+- [x] T005 [US1] Update `packages/gram/src/lib/parser/cst-types.ts` to align node definitions and metadata with the latest grammar.
+- [x] T006 [US1] Expand `packages/gram/src/lib/parser/cst-types.spec.ts` to assert coverage for every grammar node and verify removed definitions are pruned.
+- [x] T007 [US1] Implement `packages/gram/src/lib/parser/cst-stringify.ts` to output s-expressions matching tree-sitter CLI conventions, including merged arrow nodes.
+- [x] T008 [US1] Add `packages/gram/src/lib/parser/cst-stringify.spec.ts` validating stringify output for representative patterns and optional children.
+- [x] T009 [US1] Export the new stringify API through `packages/gram/src/index.ts` and update `packages/gram/src/lib/stringify/index.ts`.
 
 **Checkpoint**: CST definitions and stringifier deliverable, with focused specs verifying alignment.
 
