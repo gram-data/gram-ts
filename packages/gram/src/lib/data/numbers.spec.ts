@@ -10,7 +10,7 @@ describe('Patterns of numbers', () => {
     const b = Pattern.of(2); // b=(2)
     const ab = Pattern.combine([a, b]); // ab=[(1),(2)]
 
-    expect(Pattern.value(ab)).toBeUndefined(); // <V> is <number | null>
+    expect(Pattern.value(ab)).toBeUndefined(); // <V> is <number | undefined>
     expect(Pattern.members(ab).length).toBe(2);
 
     const [one, two] = Pattern.members(ab);
