@@ -28,9 +28,9 @@ Write commits like the current history: short, imperative summaries (`reorganize
 
 ## Active Technologies
 
-- TypeScript 5.9.3 (Nx-managed) + ree-sitter 0.25, @gram-data/tree-sitter-gram 0.2.x, Nx 22 toolchain (001-update-cst-types)
+- TypeScript 5.9.3 (Nx-managed) + tree-sitter 0.25, @gram-data/tree-sitter-gram 0.2.x, Nx 22 toolchain (001-update-cst-types)
 - N/A — in-memory CST processing only (001-update-cst-types)
 
 ## Recent Changes
 
-- 001-update-cst-types: Added TypeScript 5.9.3 (Nx-managed) + ree-sitter 0.25, @gram-data/tree-sitter-gram 0.2.x, Nx 22 toolchain
+- 001-update-cst-types: Added TypeScript 5.9.3 (Nx-managed) + tree-sitter 0.25, @gram-data/tree-sitter-gram 0.2.x, Nx 22 toolchain
