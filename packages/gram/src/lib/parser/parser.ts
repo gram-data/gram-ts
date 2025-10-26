@@ -2,27 +2,40 @@ import Parser from 'tree-sitter';
 import type { SyntaxNode } from 'tree-sitter';
 import GramLang from '@gram-data/tree-sitter-gram';
 
-import type { CstNode, CstProperty, CstRelationship, CstLabels, CstRecord, CstSyntaxTypeTag, CstSyntax, CstGram } from './cst-types';
+import type {
+  CstNode,
+  CstProperty,
+  CstRelationship,
+  CstLabels,
+  CstRecord,
+  CstSyntaxTypeTag,
+  CstSyntax,
+  CstGram,
+} from './cst-types';
 
 import { pipe, Option } from 'effect';
 
 const parser = new Parser();
-parser.setLanguage(GramLang);
+parser.setLanguage(GramLang as unknown as Parser.Language);
 
 export interface GramParseTree extends Parser.Tree {
   rootNode: CstGram;
 }
 
-export const parse = (code: string) => parser.parse(code) as GramParseTree;
+export const parse = (code: string) =>
+  parser.parse(code) as unknown as GramParseTree;
 
 export const reduce = <T>(
   cst: CstSyntax,
   f: (cst: CstSyntax, acc: T) => T,
-  acc: T
+  acc: T,
 ): T => {
   const result =
     cst.children?.length > 0
-      ? cst.children.reduce((acc, child) => reduce(child, f, acc), acc)
+      ? cst.children.reduce(
+          (acc, child) => reduce(child as CstSyntax, f, acc),
+          acc,
+        )
       : acc;
   return f(cst, result);
 };
@@ -33,35 +46,17 @@ export type Treelike<T> = {
 
 export const map = <T extends Record<string, unknown>>(
   cst: CstSyntax,
-  f: (cst: CstSyntax) => T
+  f: (cst: CstSyntax) => T,
 ): Treelike<T> => ({
   ...f(cst),
-  children: cst.children.map((child) => map(child, f)),
+  children: cst.children.map((child) => map(child as CstSyntax, f)),
 });
 
 export type SyntaxNodeFunction<T> = (cst: SyntaxNode) => T;
 
 export type GramStats = Partial<Record<CstSyntaxTypeTag, number>>;
 
-export const emptyStats: GramStats = {
-  // pattern: 0,
-  // relationship: 0,
-  // record: 0,
-  // node: 0,
-  // identifier: 0,
-  // single_undirected: 0,
-  // single_bidirectional: 0,
-  // single_right: 0,
-  // single_left: 0,
-  // double_undirected: 0,
-  // double_bidirectional: 0,
-  // double_right: 0,
-  // double_left: 0,
-  // squiggle_undirected: 0,
-  // squiggle_bidirectional: 0,
-  // squiggle_right: 0,
-  // squiggle_left: 0
-};
+export const emptyStats: GramStats = {};
 
 export const isCstSyntax = (o: unknown): o is CstSyntax =>
   typeof o === 'object' && o !== null && 'type' in o;
@@ -88,20 +83,12 @@ export const isCstSemanticElement = (o: unknown): o is CstSyntax => {
     case 'relationship':
     case 'record':
     case 'property':
-    case 'single_undirected':
-    case 'single_bidirectional':
-    case 'single_right':
-    case 'single_left':
-    case 'double_undirected':
-    case 'double_bidirectional':
-    case 'double_right':
-    case 'double_left':
-    case 'squiggle_undirected':
-    case 'squiggle_bidirectional':
-    case 'squiggle_right':
-    case 'squiggle_left':
+    case 'right_arrow':
+    case 'left_arrow':
+    case 'bidirectional_arrow':
+    case 'undirected_arrow':
     case 'labels':
-    case 'identifier':
+    case 'symbol':
       return true;
     default:
       return false;
@@ -120,10 +107,10 @@ export const stats = (cst: CstSyntax) =>
             (acc[cst.type] ?? 0) +
             (cst.type === 'labels' ? cst.namedChildCount : 1),
         })),
-        Option.getOrElse(() => acc)
+        Option.getOrElse(() => acc),
       );
     },
-    emptyStats
+    emptyStats,
   );
 
 export const nodes = (cst: CstSyntax): CstNode[] =>
@@ -132,7 +119,7 @@ export const nodes = (cst: CstSyntax): CstNode[] =>
     (cst, acc) => {
       return isCstNode(cst) ? [...acc, cst] : acc;
     },
-    [] as CstNode[]
+    [] as CstNode[],
   );
 
 export const leftNode = (cst: CstRelationship): CstNode => cst.leftNode;
@@ -146,18 +133,29 @@ export const relationships = (cst: CstSyntax): CstRelationship[] =>
     (cst, acc) => {
       return isCstRelationship(cst) ? [cst, ...acc] : acc;
     },
-    [] as CstRelationship[]
+    [] as CstRelationship[],
   );
 
+/**
+ * Extract set of label symbols.
+ *
+ * @param cst
+ * @returns
+ */
 export const labels = (cst: CstSyntax): Set<string> =>
   reduce(
     cst,
     (cst, acc) => {
-      if (isCstLabels(cst))
-        cst.namedChildren.forEach((child) => acc.add(child.text));
+      if (cst.type === 'labels') {
+        cst.namedChildren.forEach((child) => {
+          if ((child as CstSyntax).type === 'symbol') {
+            acc.add(child.text);
+          }
+        });
+      }
       return acc;
     },
-    new Set<string>()
+    new Set<string>(),
   );
 
 export const properties = (cst: CstSyntax): CstProperty[] =>
@@ -165,9 +163,11 @@ export const properties = (cst: CstSyntax): CstProperty[] =>
     cst,
     (cst, acc) => {
       // if (isCstRecord(cst)) { cst.namedChildren.forEach((property:CstProperty)=> console.log(`${property.keyNode.text}:${property.valueNode.text}`)) }
-      return isCstRecord(cst) ? [...acc, ...cst.namedChildren] : acc;
+      return isCstRecord(cst)
+        ? [...acc, ...(cst.namedChildren as unknown as CstProperty[])]
+        : acc;
     },
-    [] as CstProperty[]
+    [] as CstProperty[],
   );
 
 export const propertyKey = (cst: CstProperty): string => cst.keyNode.text;

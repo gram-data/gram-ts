@@ -1,7 +1,11 @@
 {
   "name": "@gram-data/cypher",
   "version": "0.0.1",
-  "dependencies": {},
+  "dependencies": {
+    "gram": "0.0.1",
+    "neo4j-driver": "^6.0.0",
+    "vitest": "^3.2.4"
+  },
   "type": "commonjs",
   "main": "./index.cjs"
 }

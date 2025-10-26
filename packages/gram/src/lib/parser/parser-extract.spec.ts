@@ -32,8 +32,8 @@ describe('Extract from CST', () => {
     expect(cstRelationships[0].type).toBe('relationship');
     expect(cstRelationships[0].leftNode.identifierNode?.text).toBe('hello');
     expect(rightNode(cstRelationships[0]).identifierNode?.text).toBe('world');
-    expect(cstRelationships[0].valueNode.identifierNode?.text).toBe('to');
-    expect(cstRelationships[0].valueNode.type).toBe('single_right');
+    expect(cstRelationships[0].kindNode.identifierNode?.text).toBe('to');
+    expect(cstRelationships[0].kindNode.type).toBe('right_arrow');
   });
   it('should extract a --> relationship', () => {
     const parseTree = parse('(hello)-[to]->(world)-[from]->(abk)');
@@ -42,19 +42,20 @@ describe('Extract from CST', () => {
     // cstRelationships.forEach((cstRelationship, index) => console.log(`${index}: ${cstRelationship.toString()}`));
     expect(cstRelationships[0].type).toBe('relationship');
     expect(cstRelationships[0].leftNode.identifierNode?.text).toBe('hello');
-    expect(cstRelationships[0].valueNode.identifierNode?.text).toBe('to');
+    expect(cstRelationships[0].kindNode.identifierNode?.text).toBe('to');
     expect(rightNode(cstRelationships[0]).identifierNode?.text).toBe('world');
-    expect(cstRelationships[0].valueNode.type).toBe('single_right');
+    expect(cstRelationships[0].kindNode.type).toBe('right_arrow');
     expect(rightNode(cstRelationships[0]).id).toBe(
-      leftNode(cstRelationships[1]).id
+      leftNode(cstRelationships[1]).id,
     );
     expect(leftNode(cstRelationships[1]).identifierNode?.text).toBe('world');
-    expect(cstRelationships[1].valueNode.identifierNode?.text).toBe('from');
+    expect(cstRelationships[1].kindNode.identifierNode?.text).toBe('from');
     expect(rightNode(cstRelationships[1]).identifierNode?.text).toBe('abk');
   });
   it('should extract labels', () => {
     const parseTree = parse('(hello:Word:Greeting),(world:Word:Subject)');
     const cstLabels = labels(parseTree.rootNode);
+    // console.log(cstLabels);
     expect(cstLabels).toHaveLength(3);
     expect(cstLabels.has('Word')).toBeTruthy();
     expect(cstLabels.has('Greeting')).toBeTruthy();

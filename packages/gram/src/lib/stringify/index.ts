@@ -1,5 +1,3 @@
-import * as Pattern from '../data/pattern'
+export { stringifyCst } from '../parser/cst-stringify';
 
-export const stringify = (o: unknown) => {
-  return JSON.stringify(o)
-}
+export const stringify = (value: unknown): string => JSON.stringify(value);

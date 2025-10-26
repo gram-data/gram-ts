@@ -1,21 +1,15 @@
 import neo4j from 'neo4j-driver';
+import { describe, expect, it } from 'vitest';
 
 describe('neo4j driver', () => {
-  it('should should be promising', async () => {
+  it('creates a driver without connecting', async () => {
     const driver = neo4j.driver(
       'neo4j://localhost',
-      neo4j.auth.basic('neo4j', 'marwhompa')
+      neo4j.auth.basic('neo4j', 'password'),
+      { userAgent: 'gram-cypher/tests', disableLosslessIntegers: true },
     );
 
-    const session = driver.session();
-
-    const result = await session.executeRead((tx) =>
-      tx.run('RETURN "hello" as greeting')
-    );
-
-    console.log(result.records[0].get('greeting'));
-
-    await session.close();
+    expect(typeof driver.session).toBe('function');
 
     await driver.close();
   });

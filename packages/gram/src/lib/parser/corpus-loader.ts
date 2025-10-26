@@ -1,0 +1,96 @@
+import fs from 'node:fs';
+import path from 'node:path';
+
+export interface CorpusCase {
+  readonly file: string;
+  readonly title: string;
+  readonly index: number;
+  readonly source: string;
+  readonly expected?: string;
+  readonly isError: boolean;
+}
+
+export interface LoadCorpusOptions {
+  /**
+   * Root directory containing tree-sitter corpus `.txt` fixtures.
+   * Defaults to `GRAM_CORPUS_ROOT` env value or the repository's
+   * `tree-sitter-gram/test/corpus` folder.
+   */
+  root?: string;
+}
+
+const BLOCK_PATTERN =
+  /==================\n([^=\n]+)\n(?:(:error)\n)?==================\n\n([\s\S]*?)\n---\n\n([\s\S]*?)(?=\n==================|\s*$)/g;
+
+const corpusDirectoryExists = (root: string): boolean => {
+  try {
+    return fs.statSync(root).isDirectory();
+  } catch {
+    return false;
+  }
+};
+
+export const isCorpusAvailable = (options: LoadCorpusOptions = {}): boolean => {
+  const root = resolveCorpusRoot(options.root);
+  return corpusDirectoryExists(root);
+};
+
+export const loadCorpusCases = (
+  options: LoadCorpusOptions = {},
+): CorpusCase[] => {
+  const root = resolveCorpusRoot(options.root);
+  if (!corpusDirectoryExists(root)) {
+    return [];
+  }
+  const files = fs
+    .readdirSync(root)
+    .filter((file) => file.endsWith('.txt'))
+    .sort();
+
+  const cases: CorpusCase[] = [];
+
+  for (const file of files) {
+    const absolutePath = path.join(root, file);
+    const content = fs.readFileSync(absolutePath, 'utf8');
+    let match: RegExpExecArray | null;
+    let index = 0;
+
+    while ((match = BLOCK_PATTERN.exec(content)) !== null) {
+      const [, title, errorFlag, sourceRaw, expectedRaw] = match;
+      const source = trimTrailingNewlines(sourceRaw);
+      const expected = trimTrailingNewlines(expectedRaw);
+      const corpusCase: CorpusCase = {
+        file,
+        title: title.trim(),
+        index,
+        source,
+        isError: Boolean(errorFlag),
+        ...(expected.length > 0 ? { expected } : {}),
+      };
+
+      cases.push(corpusCase);
+      index += 1;
+    }
+  }
+
+  return cases;
+};
+
+export const loadPositiveCases = (options?: LoadCorpusOptions): CorpusCase[] =>
+  loadCorpusCases(options).filter((c) => !c.isError);
+
+export const loadErrorCases = (options?: LoadCorpusOptions): CorpusCase[] =>
+  loadCorpusCases(options).filter((c) => c.isError);
+
+const trimTrailingNewlines = (value: string): string =>
+  value.replace(/\s+$/u, '').replace(/\r\n/g, '\n');
+
+function resolveCorpusRoot(override?: string): string {
+  if (override) {
+    return override;
+  }
+  if (process.env['GRAM_CORPUS_ROOT']) {
+    return process.env['GRAM_CORPUS_ROOT'];
+  }
+  return path.resolve(__dirname, '../../../../../tree-sitter-gram/test/corpus');
+}

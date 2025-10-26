@@ -1,4 +1,4 @@
-import { Literal as UnistLiteral } from 'unist';
+import type { Literal as UnistLiteral } from 'unist';
 
 export type GramPropertyRelation =
   | ':'
